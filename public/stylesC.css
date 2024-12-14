@@ -1,0 +1,124 @@
+/* Estilos generales */
+body {
+    background-image: url('/Imgs/fondoxd.jpg'); /* Ruta de la imagen */
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-attachment: fixed; /* Fija el fondo al hacer scroll */
+    background-repeat: no-repeat; /* Evita la repetición de la imagen */
+    background-position: center; /* Centra la imagen */
+    color: rgb(81, 40, 20);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Botones en la cabecera */
+.header-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.header-buttons button, 
+.header-buttons form {
+    display: inline-block;
+}
+
+/* Títulos principales */
+h1, h2 {
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo del catálogo */
+.catalogo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-evenly; /* Distribuye los productos uniformemente */
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.producto {
+    text-align: center;
+    flex: 1 1 calc(25% - 40px); /* Cada producto ocupa un 25% del ancho menos el espacio del gap */
+    max-width: 200px; /* Limita el ancho máximo de cada producto */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    background: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto:hover {
+    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.producto img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.producto p {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Estilo de las pestañas de navegación */
+.nav-tabs .nav-link {
+    border: 1px solid #ddd;
+    color: #555;
+    transition: background-color 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Estilo de los formularios */
+.form-box {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-box h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.form-box label {
+    font-weight: bold;
+    color: #555;
+}
+
+.form-box input, .form-box select {
+    margin-bottom: 15px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .producto {
+        flex: 1 1 calc(50% - 20px); /* En pantallas pequeñas, los productos ocupan el 50% */
+    }
+}
+
+@media (max-width: 480px) {
+    .producto {
+        flex: 1 1 calc(100% - 20px); /* En pantallas muy pequeñas, cada producto ocupa el ancho completo */
+    }
+}

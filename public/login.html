@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Inicio de Sesión</title>
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <h2 class="text-center">Inicio de Sesión</h2>
+        <form id="formLogin" class="p-4 border rounded bg-white shadow-sm">
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo</label>
+                <input type="email" id="correo" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="contraseña" class="form-label">Contraseña</label>
+                <input type="password" id="contraseña" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('formLogin').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const correo = document.getElementById('correo').value;
+            const contraseña = document.getElementById('contraseña').value;
+
+            const response = await fetch('/api/usuarios/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo, contraseña })
+            });
+
+            const data = await response.json();
+            alert(data.mensaje);
+            if (response.ok) window.location.href = '/gestion.html'; // Redirigir a la gestión de panes
+        });
+    </script>
+</body>
+</html>

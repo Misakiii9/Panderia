@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Gestión de Panes - Panadería</title>
+</head>
+<body class="bg-light">
+
+    <!-- Header con barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="#">Panadería</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <!-- Enlace a la página principal -->
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="index.html">Página Principal</a>
+                    </li>
+                    <!-- Enlace a la gestión de panes -->
+                    <li class="nav-item">
+                        <a class="nav-link text-white active" href="gestionar_panes.html">Gestión de Panes</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    
+
+
+
+
+
+
+
+    <!-- Contenido de la página -->
+    <div class="container my-5">
+        <h1 class="text-center text-primary mb-4">Gestión de Panes</h1>
+
+        <!-- Formulario para agregar pan -->
+        <form id="formAgregarPan" class="mb-4 p-4 border rounded-3 shadow-sm bg-white">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre del Pan</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre del pan" required>
+            </div>
+            <div class="mb-3">
+                <label for="precio" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="precio" placeholder="Precio" required>
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea id="descripcion" class="form-control" placeholder="Descripción del pan" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Agregar Pan</button>
+        </form>
+
+        <!-- Título catálogo -->
+        <h2 class="text-center text-success mb-4">Catálogo de Panes</h2>
+
+        <!-- Catálogo de panes -->
+        <div id="catalogo" class="row row-cols-1 row-cols-md-3 g-4"></div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Agregar pan
+        document.getElementById('formAgregarPan').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            const precio = document.getElementById('precio').value;
+            const descripcion = document.getElementById('descripcion').value;
+
+            const response = await fetch('/api/panes/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, precio, descripcion })
+            });
+
+            const data = await response.json();
+            alert(data.mensaje);
+            cargarCatalogo();
+        });
+
+        // Cargar catálogo
+        async function cargarCatalogo() {
+            const response = await fetch('/api/panes/catalogo');
+            const panes = await response.json();
+
+            const catalogoDiv = document.getElementById('catalogo');
+            catalogoDiv.innerHTML = '';
+            panes.forEach(pan => {
+                const panDiv = document.createElement('div');
+                panDiv.classList.add('col');
+                panDiv.innerHTML = `
+                    <div class="card shadow-sm">
+                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="${pan.nombre}">
+                        <div class="card-body">
+                            <h5 class="card-title">${pan.nombre}</h5>
+                            <p class="card-text">${pan.descripcion}</p>
+                            <p class="card-text"><strong>Precio:</strong> $${pan.precio}</p>
+                        </div>
+                    </div>
+                `;
+                catalogoDiv.appendChild(panDiv);
+            });
+        }
+
+
+
+        
+
+        // Cargar catálogo al inicio
+        cargarCatalogo();
+    </script>
+</body>
+</html>

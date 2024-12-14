@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panadería</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h1>Bienvenido a la Panadería</h1>
+
+  <form action="/login" method="POST">
+    <h2>Iniciar sesión</h2>
+    <label for="correo">Correo:</label>
+    <input type="email" name="correo" required>
+    <label for="contraseña">Contraseña:</label>
+    <input type="password" name="contraseña" required>
+    <button type="submit">Iniciar sesión</button>
+  </form>
+
+  <h2>Catálogo de Panes</h2>
+  <div id="catalogo"></div>
+
+  <script>
+    fetch('/catalogo')
+      .then(response => response.json())
+      .then(data => {
+        const catalogoDiv = document.getElementById('catalogo');
+        data.forEach(pan => {
+          const panElement = document.createElement('div');
+          panElement.innerHTML = `<h3>${pan.nombre}</h3><p>${pan.descripcion}</p><p>Precio: $${pan.precio}</p><p>Stock: ${pan.stock}</p>`;
+          catalogoDiv.appendChild(panElement);
+        });
+      });
+  </script>
+
+</body>
+</html>
